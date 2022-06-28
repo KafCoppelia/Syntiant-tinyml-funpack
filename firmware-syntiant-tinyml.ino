@@ -32,21 +32,66 @@
  * @param[in]  confidence     The confidence
  * @param[in]  anomaly_score  The anomaly score
  */
+typedef enum {
+    _BLINK,
+    _TURN_ON,
+    _TURN_OFF,
+    //_Z_OPENSET = 0U
+} Led_Status;
+
+Led_Status last_state = _TURN_OFF;
+
 void on_classification_changed(const char *event, float confidence, float anomaly_score) {
 
     // here you can write application code, e.g. to toggle LEDs based on keywords
-    if (strcmp(event, "stop") == 0) {
-        // Toggle LED
-        digitalWrite(LED_RED, HIGH);
+    if (strcmp(event, "blink") == 0) {
+        blink_cb();
     }
 
-    if (strcmp(event, "go") == 0) {
-        // Toggle LED
-        digitalWrite(LED_GREEN, HIGH);
+    else if (strcmp(event, "turn_off") == 0) {
+        turn_off_cb();
     }
+
+    else if (strcmp(event, "turn_on") == 0) {
+        turn_on_cb();
+    }
+
+    // if (strcmp(event, "z_openset") == 0) {
+    //     others_handle();
+    // }
 }
 
+void on_classification_unmatched(void) {
+    if (last_state == _BLINK)
+        blink_cb();
+    else if (last_state == _TURN_ON)
+        turn_on_cb();
+    else
+        turn_off_cb();
+}
 
+void turn_on_cb() {
+    last_state = _TURN_ON;
+    digitalWrite(LED_GREEN, HIGH);
+}
+
+void turn_off_cb() {
+    last_state = _TURN_OFF;
+    digitalWrite(LED_GREEN, LOW);
+}
+
+void blink_cb() {
+    last_state = _BLINK;
+    // digitalWrite(LED_BLUE, 1-digitalRead(LED_BLUE));
+
+    digitalWrite(LED_BLUE, HIGH);
+    delay(200);
+    digitalWrite(LED_BLUE, LOW);
+    delay(200);
+    digitalWrite(LED_BLUE, HIGH);
+    delay(200);
+    digitalWrite(LED_BLUE, LOW);
+}
 
 void setup(void)
 {

@@ -373,6 +373,11 @@ void isrTimer4(struct tc_module *const module_inst)
                 printBattery(); // Print current battery level
 
             }
+            // else
+            // {
+            //     extern void on_classification_unmatched(void);
+            //     on_classification_unmatched();
+            // }
         }
         else
         {
