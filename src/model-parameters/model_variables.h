@@ -26,7 +26,7 @@
 #include "model_metadata.h"
 #include "edge-impulse-sdk/classifier/ei_model_types.h"
 
-const char* ei_classifier_inferencing_categories[] = { "blink", "turn_off", "turn_on" };
+const char* ei_classifier_inferencing_categories[] = { "turn_on", "turn_off", "blink" };
 
 uint8_t ei_dsp_config_9_axes[] = { 0 };
 const uint32_t ei_dsp_config_9_axes_size = 1;

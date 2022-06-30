@@ -55,18 +55,14 @@ void on_classification_changed(const char *event, float confidence, float anomal
     else if (strcmp(event, "turn_on") == 0) {
         turn_on_cb();
     }
-
-    // if (strcmp(event, "z_openset") == 0) {
-    //     others_handle();
-    // }
 }
 
-void on_classification_unmatched(void) {
+void on_classification_unmatched() {
     if (last_state == _BLINK)
         blink_cb();
     else if (last_state == _TURN_ON)
         turn_on_cb();
-    else
+    else if (last_state == _TURN_OFF)
         turn_off_cb();
 }
 
